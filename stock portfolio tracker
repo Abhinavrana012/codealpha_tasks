@@ -1,0 +1,136 @@
+import csv
+
+
+def calculate_portfolio():
+    # 1. Define a hardcoded dictionary of stock prices
+    stock_prices = {
+        "AAPL": 180.00,
+        "TSLA": 250.00,
+        "GOOGL": 150.00,
+        "AMZN": 175.00,
+        "MSFT": 400.00,
+    }
+
+    portfolio = []
+    total_portfolio_value = 0.0
+
+    print("--- Welcome to the Stock Portfolio Tracker ---")
+    print("Available stocks in system:", list(stock_prices.keys()))
+    print("Type 'done' when you are finished entering your stocks.\n")
+
+    # 2. Accept dynamic user inputs
+    while True:
+        stock_name = (
+            input("Enter stock name/ticker (e.g., AAPL): ").strip().upper()
+        )
+
+        if stock_name == "DONE":
+            break
+
+        # Check if the stock exists in our dictionary database
+        if stock_name not in stock_prices:
+            print(
+                f"Error: '{stock_name}' is not in our system. Please try a valid ticker."
+            )
+            continue
+
+        try:
+            quantity = int(input(f"Enter quantity of shares for {stock_name}: "))
+            if quantity <= 0:
+                print("Quantity must be a positive integer.")
+                continue
+        except ValueError:
+            print("Invalid input! Please enter a valid number for quantity.")
+            continue
+
+        # 3. Calculate investment arithmetic
+        price_per_share = stock_prices[stock_name]
+        total_value = quantity * price_per_share
+        total_portfolio_value += total_value
+
+        # Save to memory list
+        portfolio.append(
+            {
+                "Stock": stock_name,
+                "Quantity": quantity,
+                "Price": price_per_share,
+                "Total Value": total_value,
+            }
+        )
+        print(f"Added: {quantity} shares of {stock_name} (${total_value:,.2f})")
+        print("-" * 40)
+
+    # If the portfolio is empty, exit early
+    if not portfolio:
+        print("\nNo stocks were entered. Portfolio is empty.")
+        return
+
+    # 4. Display Results Summary
+    print("\n" + "=" * 45)
+    print("               PORTFOLIO SUMMARY               ")
+    print("=" * 45)
+    print(f"{'Stock':<10}{'Quantity':<10}{'Price':<12}{'Total Value'}")
+    print("-" * 45)
+    for holding in portfolio:
+        print(
+            f"{holding['Stock']:<10}"
+            f"{holding['Quantity']:<10}"
+            f"${holding['Price']:<11.2f}"
+            f"${holding['Total Value']:,.2f}"
+        )
+    print("-" * 45)
+    print(f"TOTAL PORTFOLIO VALUE: ${total_portfolio_value:,.2f}")
+    print("=" * 45)
+
+    # 5. File Handling (Saving the result data)
+    save_choice = (
+        input("\nWould you like to save this summary to a file? (yes/no): ")
+        .strip()
+        .lower()
+    )
+
+    if save_choice in ["yes", "y"]:
+        file_type = (
+            input("Choose file format - type 'txt' or 'csv': ")
+            .strip()
+            .lower()
+        )
+
+        if file_type == "csv":
+            # Save as a structural spreadsheet table file
+            filename = "portfolio_summary.csv"
+            with open(filename, mode="w", newline="") as csv_file:
+                fieldnames = ["Stock", "Quantity", "Price", "Total Value"]
+                writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
+                writer.writeheader()
+                for holding in portfolio:
+                    writer.writerow(holding)
+                csv_file.write(f"\nTotal Portfolio Value,,,{total_portfolio_value}\n")
+            print(f"Success! Portfolio saved to '{filename}'.")
+
+        else:
+            # Default fallback save to standard readable Text file
+            filename = "portfolio_summary.txt"
+            with open(filename, mode="w") as txt_file:
+                txt_file.write("=== STOCK PORTFOLIO TRACKER SUMMARY ===\n\n")
+                txt_file.write(
+                    f"{'Stock':<10}{'Quantity':<10}{'Price':<12}{'Total Value'}\n"
+                )
+                txt_file.write("-" * 45 + "\n")
+                for holding in portfolio:
+                    txt_file.write(
+                        f"{holding['Stock']:<10}"
+                        f"{holding['Quantity']:<10}"
+                        f"${holding['Price']:<11.2f}"
+                        f"${holding['Total Value']:,.2f}\n"
+                    )
+                txt_file.write("-" * 45 + "\n")
+                txt_file.write(
+                    f"TOTAL PORTFOLIO VALUE: ${total_portfolio_value:,.2f}\n"
+                )
+            print(f"Success! Portfolio saved cleanly to '{filename}'.")
+
+
+# Run the application
+if __name__ == "__main__":
+    calculate_portfolio()
