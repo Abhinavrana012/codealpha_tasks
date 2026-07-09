@@ -1,15 +1,30 @@
-# Hangman Game
+# CodeAlpha Python Programming Internship
 
-A simple, text-based Hangman game built using Python. This project was developed as part of the **CodeAlpha Internship** for Task 1.
+This repository contains the projects developed during my Python Programming Internship at CodeAlpha.
 
-## Features
+---
+
+## Task 1: Hangman Game
+A simple, text-based Hangman game built using Python.
+
+### Features
 * Predefined list of secret words.
 * Limit of 6 incorrect guesses before the game ends.
-* Purely console/terminal-based user interface (no complex graphics required).
-* Robust input handling to validate single letters and prevent repeat guesses.
+* Basic console input/output — no graphics or audio.
 
-## Key Concepts Used
-* `random` module for choosing words dynamically.
-* `while` loops for continuous gameplay.
-* `if-else` structural statements for game logic execution.
-* Python `lists` and `strings` manipulation.
+### Key Concepts Used
+* `random`, `while loop`, `if-else`, `strings`, `lists`
+
+---
+
+## Task 2: Stock Portfolio Tracker
+A simple stock tracker that calculates total investment based on manually defined stock prices.
+
+### Features
+* User inputs stock names and quantity.
+* Use a hardcoded dictionary to define stock prices (e.g., {"AAPL": 180, "TSLA": 250}).
+* Display total investment value and optionally save the result in a .txt or .csv file.
+
+### Key Concepts Used
+* `dictionary`, `input/output`, `basic arithmetic`, `file handling (optional)`
+  
