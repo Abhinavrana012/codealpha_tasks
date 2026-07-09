@@ -26,7 +26,7 @@ while wrong_attempts < max_attempts:
 
     # Check if the word is guessed
     if "_" not in display:
-        print("🎉 Congratulations! You guessed the word.")
+        print("Congratulations! You guessed the word.")
         break
 
     # Take input
